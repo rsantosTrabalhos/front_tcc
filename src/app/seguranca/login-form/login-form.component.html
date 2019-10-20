@@ -1,0 +1,23 @@
+<div class="container" >
+  <form #loginForm="ngForm" >
+    <div class="ui-g  login ">
+        <div class="ui-g-12 ">
+          <h1>Login</h1>
+        </div>
+
+        <div class="ui-g-12  ui-fluid ">
+          <input type="email" pInputText name="email" ngModel #email="ngModel" placeholder="E-mail" required
+                 pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" > <!-- {1,} min de ocorrências com o max livre -->
+        </div>
+
+        <div class="ui-g-12  ui-fluid ">
+          <input type="password" pInputText name="senha" ngModel #senha="ngModel" placeholder="Senha" required >
+        </div>
+
+        <div class="ui-g-12  ui-fluid ">
+          <button type="submit" label="Login" [disabled]="loginForm.valid == false" (click)="login(email.value, senha.value, loginForm);" pButton></button>
+        </div>
+    </div>
+  </form>
+
+</div>

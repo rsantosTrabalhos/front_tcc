@@ -1,0 +1,9 @@
+<p-dataTable [value]="pessoas" [responsive]="true" emptyMessage="Nenhuma informação encontrada."
+             [paginator]="true" [rows]="filtro.itensPorPagina" [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="totalRegistros"
+             (onLazyLoad)="aoMudarPagina($event)" #tabela >
+  <p-column field="nome" header="Nome"></p-column>
+  <p-column field="enderecoPessoa.cidade" header="Cliente"></p-column>
+  <p-column field="enderecoPessoa.estado" header="E-mail"></p-column>
+  <p-column field="enderecoPessoa.status" header="Data de Agendamento" ></p-column>
+  <p-column field="enderecoPessoa.status" header="Profissional" ></p-column>
+</p-dataTable>

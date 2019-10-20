@@ -1,0 +1,86 @@
+<div class="container">
+  <form #pessoaForm="ngForm" (ngSubmit)="submeter(pessoaForm)" >
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{ tituloPagina }}</h1>
+      </div>
+
+      <div class="ui-g-12  ui-fluid">
+        <label>Nome</label>
+        <input type="text" pInputText name="nome" #nome="ngModel" [(ngModel)]="pessoa.nome" maxlength="150" required minlength="5"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+
+        <app-message [control]="nome" error="required" text='Informe um nome' ></app-message>
+        <app-message [control]="nome" error="minlength" text='Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres' ></app-message>
+      </div>
+
+      <div class="ui-g-9  ui-fluid">
+        <label>Logradouro</label>
+        <input type="text" pInputText name="logradouro" #logradouro="ngModel" [(ngModel)]="pessoa.enderecoPessoa.logradouro" maxlength="150" required minlength="5"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+
+        <app-message [control]="logradouro" error="required" text='Informe um logradouro' ></app-message>
+        <app-message [control]="logradouro" error="minlength" text='Mínimo de {{ logradouro.errors?.minlength?.requiredLength }} caracteres' ></app-message>
+      </div>
+
+      <div class="ui-g-3  ui-fluid">
+        <label>Número</label>
+        <input type="text" pInputText name="numero" #numero="ngModel" maxlength="6" required [(ngModel)]="pessoa.enderecoPessoa.numero"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+
+        <app-message [control]="numero" error="required" text='Informe um número' ></app-message>
+      </div>
+
+      <div class="ui-g-4  ui-fluid">
+        <label>Complemento</label>
+        <input type="text" pInputText name="complemento" #complemento="ngModel" maxlength="30" [(ngModel)]="pessoa.enderecoPessoa.complemento"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+      </div>
+
+      <div class="ui-g-4  ui-fluid">
+        <label>Bairro</label>
+        <input type="text" pInputText name="bairro" #bairro="ngModel" required minlength="5" maxlength="30" [(ngModel)]="pessoa.enderecoPessoa.bairro"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+
+        <app-message [control]="bairro" error="required" text='Informe o bairro' ></app-message>
+        <app-message [control]="bairro" error="minlength" text='Mínimo de {{ bairro.errors?.minlength?.requiredLength }} caracteres' ></app-message>
+      </div>
+
+      <div class="ui-g-4  ui-fluid">
+        <label>CEP</label>
+        <p-inputMask mask="99999-999" name="cep" #cep="ngModel" required maxlength="9" [(ngModel)]="pessoa.enderecoPessoa.cep"
+                     [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')"></p-inputMask>
+
+        <app-message [control]="cep" error="required" text='Informe o cep' ></app-message>
+      </div>
+
+      <div class="ui-g-6  ui-fluid">
+        <label>Cidade</label>
+        <input type="text" pInputText name="cidade" #cidade="ngModel" required minlength="5" maxlength="30" [(ngModel)]="pessoa.enderecoPessoa.cidade"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+
+        <app-message [control]="cidade" error="required" text='Informe a cidade' ></app-message>
+        <app-message [control]="cidade" error="minlength" text='Mínimo de {{ cidade.errors?.minlength?.requiredLength }} caracteres' ></app-message>
+      </div>
+
+      <div class="ui-g-6  ui-fluid">
+        <label>Estado</label>
+        <input type="text" pInputText name="estado" #estado="ngModel" required minlength="2" maxlength="2" [(ngModel)]="pessoa.enderecoPessoa.estado"
+               [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')">
+
+        <app-message [control]="estado" error="required" text='Informe o estado' ></app-message>
+        <app-message [control]="estado" error="minlength" text='Mínimo de {{ estado.errors?.minlength?.requiredLength }} caracteres' ></app-message>
+      </div>
+
+      <div class="ui-g-12">
+        <button type="submit" label="Salvar" [disabled]="pessoaForm.valid == false" pButton
+                [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')"></button>
+        <button type="button" label="Novo" class="ui-button-info" pButton (click)="novo(pessoaForm)"
+                [disabled]="!autenticacaoService.verificarPermissao('ROLE_CADASTRAR_PESSOA')"></button>
+        <a routerLink="/pessoas" >Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+
+</div>

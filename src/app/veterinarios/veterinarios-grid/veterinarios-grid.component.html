@@ -1,0 +1,49 @@
+<!-- COMPONENTE p-dataTable / PRIMENG
+[paginator]=true -> Disponibilizando paginação
+[rows]=2 -> qtde de linhas por página
+[responsive]=true -> Deixando a tabela responsiva -->
+<p-table [value]="lancamentos"
+         [responsive]="true"
+         [paginator]="true"
+         [rows]="filtro.itensPorPagina"
+         [lazy]="true"
+         [totalRecords]="totalRegistros"
+         (onLazyLoad)="aoMudarPagina($event)"
+         #tabela >
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Veterinario</th>
+      <th>CPF</th>
+      <th class="col-data-header" >RG</th>
+      <th class="col-data-header" >Registro no Conselho</th>
+      <th class="col-acoes-header"></th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-lanc>
+    <tr>
+      <td> {{ lanc.pessoa }} </td>
+      <td> {{ lanc.descricao }} </td>
+      <td class="col-data"> {{ lanc.dataVencimento | date: 'dd/MM/y' }} </td>
+      <td class="col-data"> {{ lanc.dataPagamento | date: 'dd/MM/y' }} </td>
+      <td class="col-acoes" >
+          <button pButton
+                  icon="fa-pencil"
+                  pTooltip="Editar Lançamento"
+                  tooltipPosition="top"
+                  [routerLink]="['/lancamentos', lanc.codigo]">
+          </button> <!-- DIRETIVA icon=fa-pencil AWESOME -->
+      </td>
+    </tr>
+
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">
+        Nenhum veterinário encontrado.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

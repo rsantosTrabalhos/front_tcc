@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="ui-g">
+
+    <form autocomplete="off" (ngSubmit)="pesquisar()" >
+      <div>
+        <div class="ui-g-12">
+          <h1>Veterinário</h1>
+        </div>
+
+        <div class="ui-g-12">
+          <label>Nome</label>
+          <input type="text" pInputText name="nome" >
+
+          <label>CPF</label>
+          <input type="text" pInputText name="cpf" >
+
+          <label>RG</label>
+          <input type="text" pInputText name="rg" >
+        </div>
+
+        <div class="ui-g-12">
+          <label>Registro no Conselho</label>
+          <input type="text" pInputText name="conselho">
+
+          <label>Especialidade</label>
+          <input type="text" pInputText name="especialidade">
+        </div>
+
+        <div class="ui-g-12">
+          <button type="submit" label="Consultar" pButton></button> 
+          <button type="submit" label="Cancelar" pButton></button> 
+        </div>
+      </div>
+
+
+      <div class="ui-g-12">
+        <app-lancamentos-grid [lancamentos]="lancamentos" [filtro]="filtro" [totalRegistros]="totalRegistros" [totalValor]="totalValor" ></app-lancamentos-grid>
+      </div>
+
+      <div class="ui-g-12">
+        <a label="Novo Veterinário" pButton routerLink="/veterinarios/novo" ></a>
+      </div>
+
+
+    </form>
+
+  </div>
+</div>
+

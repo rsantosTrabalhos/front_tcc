@@ -1,0 +1,51 @@
+<div class="container">
+  <form (ngSubmit)="submeter()" [formGroup]="formulario"  >
+    <div class="ui-g">
+      <div class="ui-g-12" >
+        <h1>{{ tituloPagina }}</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome">
+
+        <label>CPF</label>
+        <input pInputText type="text" name="cpf">
+
+        <label>RG</label>
+        <input pInputText type="text" name="rg">
+      </div>
+
+      <div class="ui-g-12">
+        <label>Registro no Conselho</label>
+        <input pInputText type="text" name="conselho">
+
+        <label>Especialidade</label>
+        <input pInputText type="text" name="especialidade">
+      </div>
+
+      
+
+      <div class="ui-g-12">
+        <button
+          pButton
+          type="submit"
+          label="Cadastrar">
+        </button>
+
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          class="ui-button-info"
+          (click)="novo()">
+        </button>
+
+        <a routerLink="/veterinarios" >Voltar para a pesquisa</a>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>
