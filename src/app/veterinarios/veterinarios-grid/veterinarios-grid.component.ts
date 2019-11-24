@@ -5,7 +5,7 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 import { ToastyService } from 'ng2-toasty';
 import { ConfirmationService } from 'primeng/components/common/api';
 
-import { LancamentoFiltro, VeterinarioService } from '../veterinario.service';
+import { VeterinarioFiltro, VeterinarioService } from '../veterinario.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { AutenticacaoService } from '../../seguranca/autenticacao.service';
 
@@ -23,8 +23,8 @@ export class VeterinariosGridComponent {
               private errorHandle: ErrorHandlerService,
               private autenticacaoService: AutenticacaoService) { }
 
-  @Input() lancamentos = [];
-  @Input() filtro: LancamentoFiltro;
+  @Input() veterinarios = [];
+  @Input() filtro: VeterinarioFiltro;
   @Input() totalRegistros;
   @Input() totalValor: any = 0;
   @ViewChild('tabela') grid;
@@ -34,10 +34,9 @@ export class VeterinariosGridComponent {
 
     this.filtro.pagina = pagina;
 
-    this.veterinarioService.pesquisar(this.filtro).then(lancamentosEncontrados => {
-      this.lancamentos = lancamentosEncontrados.lancamentos;
-      this.totalRegistros = lancamentosEncontrados.total;
-      this.totalValor = this.veterinarioService.totalizar(this.lancamentos);
+    this.veterinarioService.pesquisar(this.filtro).then(veterinariosEncontrados => {
+      debugger;
+      this.veterinarios = veterinariosEncontrados;
     }).catch(erro => this.errorHandle.handle(erro));
   }
 
@@ -46,9 +45,8 @@ export class VeterinariosGridComponent {
       if (this.grid.first === 0) {
         this.filtro.pagina = 0;
         this.veterinarioService.pesquisar(this.filtro).then(lancamentosEncontrados => {
-          this.lancamentos = lancamentosEncontrados.lancamentos;
+          this.veterinarios = lancamentosEncontrados.lancamentos;
           this.totalRegistros = lancamentosEncontrados.total;
-          this.totalValor = this.veterinarioService.totalizar(this.lancamentos);
         });
       } else {
         /* Necessário para resetar a posição da pagina do grid e consequentemente fazer a nova pesquisa sem o registro removido */
@@ -67,7 +65,7 @@ export class VeterinariosGridComponent {
                                  this.excluir(lancamento);
                                },
                                reject: () => {
-                                this.totalValor = this.veterinarioService.totalizar(this.lancamentos);
+                                
                                } });
   }
 

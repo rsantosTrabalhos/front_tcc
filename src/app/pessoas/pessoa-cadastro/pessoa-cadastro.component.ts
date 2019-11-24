@@ -64,7 +64,6 @@ export class PessoaCadastroComponent implements OnInit {
 
   salvar(form: FormControl) {
     this.barraAguardeService.mostrarBarra();
-    this.pessoa.ativo = true;
     this.pessoaService.adicionar(this.pessoa).then(() => {
       this.toastyService.success('Pessoa adicionada com sucesso!');
       form.reset();

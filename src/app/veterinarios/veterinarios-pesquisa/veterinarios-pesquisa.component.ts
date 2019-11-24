@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
-import { VeterinarioService, LancamentoFiltro } from '../veterinario.service';
+import { VeterinarioService, VeterinarioFiltro } from '../veterinario.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { AutenticacaoService } from '../../seguranca/autenticacao.service';
 
@@ -14,13 +14,13 @@ import { AutenticacaoService } from '../../seguranca/autenticacao.service';
 })
 export class VeterinariosPesquisaComponent implements OnInit {
 
-  lancamentos = [];
-  filtro = new LancamentoFiltro();
+  veterinarios = [];
+  filtro = new VeterinarioFiltro();
   pt: any;
   totalRegistros = 0;
   totalValor: any = 0;
 
-  constructor(private lancamentoService: VeterinarioService,
+  constructor(private veterinarioService: VeterinarioService,
               private errorHandle: ErrorHandlerService,
               private titulo: Title,
               private autenticacaoService: AutenticacaoService) { }
@@ -44,8 +44,18 @@ export class VeterinariosPesquisaComponent implements OnInit {
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
 
-    this.lancamentoService.pesquisar(this.filtro).then(lancamentosEncontrados => {
-      
+    this.veterinarioService.pesquisar(this.filtro).then(veterinariosEncontrados => {
+      debugger;
+      this.veterinarios = veterinariosEncontrados;
     }).catch(erro => this.errorHandle.handle(erro));
   }
+
+  /*
+  carregarCategorias() {
+    return this.categoriaService.pesquisarTodos().then(categorias => {
+      this.categorias = categorias.map(categoria => {
+        return { label: categoria.nome, value: categoria.codigo };
+      });
+    }).catch(erro => this.errorHandlerService.handle(erro));
+  }*/
 }

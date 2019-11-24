@@ -19,7 +19,7 @@ const rotas: Routes = [
     data: { roles: [ 'ROLE_CADASTRAR_LANCAMENTO' ] }
   },
   /* Rota para satisfazer a busca de lançamento pelo código */
-  { path: ':codigo',
+  { path: ':codigo/:nome/:codigoPessoa/:cpf/:rg/:rc/:espe',
     component: VeterinarioCadastroComponent,
     canActivate: [SegurancaGuard],
     data: { roles: [ 'ROLE_PESQUISAR_LANCAMENTO' ] }

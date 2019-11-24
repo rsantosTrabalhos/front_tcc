@@ -5,23 +5,26 @@
         <h1>{{ tituloPagina }}</h1>
       </div>
 
-      <div class="ui-g-12">
+      <div class="ui-g-12" formGroupName="pessoa" >
         <label>Nome</label>
-        <input pInputText type="text" name="nome">
+        <input pInputText type="text" name="nome" formControlName="nome">
 
         <label>CPF</label>
-        <input pInputText type="text" name="cpf">
+        <input pInputText type="text" name="cpf" formControlName="cpf">
 
         <label>RG</label>
-        <input pInputText type="text" name="rg">
+        <input pInputText type="text" name="rg" formControlName="rg">
+        <input pInputText type="hidden" name="codigo" formControlName="codigo">
       </div>
 
       <div class="ui-g-12">
         <label>Registro no Conselho</label>
-        <input pInputText type="text" name="conselho">
+        <input pInputText type="text" name="conselho" formControlName="registroConselho">
 
-        <label>Especialidade</label>
-        <input pInputText type="text" name="especialidade">
+        <div formGroupName="veterinarioTipoPet">
+          <label>Especialidade</label>
+          <input pInputText type="text" name="especialidade" formControlName="codigoTipoPet">
+        </div>  
       </div>
 
       

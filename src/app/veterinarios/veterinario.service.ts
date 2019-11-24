@@ -6,12 +6,14 @@ import * as moment from 'moment';
 import { AuthHttp } from 'angular2-jwt';
 
 import { BarraAguardeService } from '../shared/barra-aguarde/BarraAguardeService.service';
-import { Lancamento } from '../core/model';
+import { Lancamento, Veterinario } from '../core/model';
 
-export class LancamentoFiltro {
-  descricao: string;
-  dataVencimentoInicio: Date;
-  dataVencimentoFim: Date;
+export class VeterinarioFiltro {
+  nome: string;
+  cpf: string;
+  rg: string;
+  registroConselho: string;
+  especialidade: string;
   pagina = 0;
   itensPorPagina = 3;
 }
@@ -19,51 +21,38 @@ export class LancamentoFiltro {
 @Injectable()
 export class VeterinarioService {
 
-  lancamentosUrl = 'http://localhost:8090/doggis';
+  veterinarioUrl = 'http://localhost:8090/doggis';
 
   constructor(private http: AuthHttp,
               private barraAguardeService: BarraAguardeService) { }
 
-  pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    this.barraAguardeService.mostrarBarra();
+  pesquisar(filtro: VeterinarioFiltro): Promise<any> {
+    
 
     let params = new URLSearchParams();
     /* const headers = new Headers(); */
     /* headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='); */
 
-    params = this.validarFiltro(filtro.descricao, 'descricao', 'string', params);
-    params = this.validarFiltro(filtro.dataVencimentoInicio, 'dataVencimentoDe', 'date', params);
-    params = this.validarFiltro(filtro.dataVencimentoFim, 'dataVencimentoAte', 'date', params);
+    params = this.validarFiltro(filtro.nome, 'nome', 'string', params);
+    params = this.validarFiltro(filtro.cpf, 'cpf', 'string', params);
+    params = this.validarFiltro(filtro.rg, 'rg', 'string', params);
+    params = this.validarFiltro(filtro.rg, 'registroConselho', 'string', params);
+    params = this.validarFiltro(filtro.rg, 'especialidade', 'string', params);
     params = this.validarFiltro(filtro.pagina.toString(), 'page', 'string', params);
     params = this.validarFiltro(filtro.itensPorPagina.toString(), 'size', 'string', params);
 
-    const promessa = this.http.get(`${this.lancamentosUrl}/veterinarios`, { /* headers, */ search: params }).toPromise().then(
-      response => { const responseJson = response.json();
-                    const lancamentos = responseJson.content;
-
-                    const resultado = {
-                       lancamentos: lancamentos,
-                       total: responseJson.totalElements
-                    };
-
-                    this.barraAguardeService.esconderBarra();
-
-                    return resultado;
-                  }
-    );
-
-    return promessa;
-
+    return this.http.get(`${this.veterinarioUrl}/veterinarios`, { /* headers, */ search: params }).toPromise().then(
+      response => response.json());
   }
 
   pesquisarPorCodigo(codigo: number): Promise<any> {
-    this.barraAguardeService.mostrarBarra();
+    
 
     /* const headers = new Headers(); */
     /* headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='); */
 
-    const promessa = this.http.get(`${this.lancamentosUrl}/${codigo}`, { /* headers */ }).toPromise().then(response => {
-      this.barraAguardeService.esconderBarra();
+    const promessa = this.http.get(`${this.veterinarioUrl}/${codigo}`, { /* headers */ }).toPromise().then(response => {
+      
       const lancamentoEncontrado = response.json();
       this.validarDataLancamento([lancamentoEncontrado]);
 
@@ -89,7 +78,7 @@ export class VeterinarioService {
     /* const headers = new Headers(); */
     /* headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='); */
 
-    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { /* headers */ }).toPromise().then(() => null);
+    return this.http.delete(`${this.veterinarioUrl}/${codigo}`, { /* headers */ }).toPromise().then(() => null);
   }
 
   totalizar(lancamentos: any): Number {
@@ -103,31 +92,25 @@ export class VeterinarioService {
     return totalValor;
   }
 
-  adicionar(lancamento: Lancamento): Promise<Lancamento> {
+  adicionar(veterinario: Veterinario): Promise<Veterinario> {
     /* const headers = new Headers(); */
     /* headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='); */
     /* headers.append('Content-Type', 'Application/json'); */
 
-    return this.http.post(this.lancamentosUrl, JSON.stringify(lancamento), { /* headers */ }).toPromise().then(response => response.json());
+    return this.http.post(this.veterinarioUrl + '/veterinario/', JSON.stringify(veterinario), { /* headers */ }).toPromise().then(response => response.json());
   }
 
-  editar(lancamento: Lancamento): Promise<Lancamento> {
-    this.barraAguardeService.mostrarBarra();
-
-    /* Necessário visto que na documentação do back não requer estes atributos, somente os códigos */
-    this.removerAtributos(lancamento);
+  editar(veterinario: Veterinario): Promise<Veterinario> {
+    debugger
 
     /* const headers = new Headers(); */
     /* headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='); */
     /* headers.append('Content-Type', 'Application/json'); */
 
-    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, JSON.stringify(lancamento), { /* headers */ }).toPromise().
+    return this.http.put(`${this.veterinarioUrl}/veterinario/${veterinario.codigo}`, JSON.stringify(veterinario), { /* headers */ }).toPromise().
       then(response => {
-        const lancamentoAlterado = response.json();
-        this.validarDataLancamento([lancamentoAlterado]);
-
-        this.barraAguardeService.esconderBarra();
-        return lancamentoAlterado;
+        const veterinarioAlterado = response.json();
+        return veterinarioAlterado;
     });
   }
 
@@ -136,13 +119,6 @@ export class VeterinarioService {
       lancamento.dataVencimento = moment(lancamento.dataVencimento, 'YYYY-MM-DD').toDate();
       lancamento.dataPagamento = lancamento.dataPagamento ? moment(lancamento.dataPagamento, 'YYYY-MM-DD').toDate() : null;
     }
-  }
-
-  removerAtributos(lancamento: Lancamento) {
-    delete lancamento.categoria['nome'];
-    delete lancamento.pessoa['nome'];
-    delete lancamento.pessoa['ativo'];
-    delete lancamento.pessoa['enderecoPessoa'];
   }
 
   converterParaDate(data: string): Date {

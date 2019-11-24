@@ -2,7 +2,7 @@
 [paginator]=true -> Disponibilizando paginação
 [rows]=2 -> qtde de linhas por página
 [responsive]=true -> Deixando a tabela responsiva -->
-<p-table [value]="lancamentos"
+<p-table [value]="veterinarios"
          [responsive]="true"
          [paginator]="true"
          [rows]="filtro.itensPorPagina"
@@ -23,16 +23,16 @@
 
   <ng-template pTemplate="body" let-lanc>
     <tr>
-      <td> {{ lanc.pessoa }} </td>
-      <td> {{ lanc.descricao }} </td>
-      <td class="col-data"> {{ lanc.dataVencimento | date: 'dd/MM/y' }} </td>
-      <td class="col-data"> {{ lanc.dataPagamento | date: 'dd/MM/y' }} </td>
+      <td> {{ lanc.pessoa.nome }} </td>
+      <td> {{ lanc.pessoa.cpf }} </td>
+      <td class="col-data"> {{ lanc.pessoa.rg }} </td>
+      <td class="col-data"> {{ lanc.registroConselho }} </td>
       <td class="col-acoes" >
           <button pButton
                   icon="fa-pencil"
                   pTooltip="Editar Lançamento"
                   tooltipPosition="top"
-                  [routerLink]="['/lancamentos', lanc.codigo]">
+                  [routerLink]="['/veterinarios', lanc.codigo, lanc.pessoa.nome, lanc.pessoa.codigo, lanc.pessoa.cpf, lanc.pessoa.rg, lanc.registroConselho, lanc.veterinarioTipoPet.codigoTipoPet]">
           </button> <!-- DIRETIVA icon=fa-pencil AWESOME -->
       </td>
     </tr>

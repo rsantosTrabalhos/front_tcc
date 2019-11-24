@@ -7,9 +7,9 @@ export class BarraAguardeService {
 
   mostrarBarra() {
     const divAguarde = this.getDiv();
-
+    debugger;
     if (divAguarde) {
-      divAguarde.style.display = 'inline';
+      // divAguarde.style.display = 'inline';
     }
   }
 
@@ -17,7 +17,7 @@ export class BarraAguardeService {
     const divAguarde = this.getDiv();
 
     if (divAguarde) {
-      divAguarde.style.display = 'none';
+     // divAguarde.style.display = 'none';
     }
   }
 

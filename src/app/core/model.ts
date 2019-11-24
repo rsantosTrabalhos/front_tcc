@@ -1,8 +1,20 @@
 export class Pessoa {
   codigo: number;
   nome: string;
-  ativo: boolean;
-  enderecoPessoa = new Endereco();
+  rg: string;
+  cpf: string;
+}
+
+export class VeterinarioTipoPet {
+  codigoVeterinario: number;
+  codigoTipoPet: number;
+}
+
+export class Veterinario {
+  codigo: number;
+  registroConselho: string;
+  pessoa: Pessoa;
+  veterinarioTipoPet: VeterinarioTipoPet;
 }
 
 export class Endereco {
